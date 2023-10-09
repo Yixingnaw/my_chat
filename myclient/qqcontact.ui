@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>qqContact</class>
+ <widget class="QWidget" name="qqContact">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>338</width>
+    <height>663</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QListWidget" name="friends">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>311</width>
+     <height>192</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="jiahaoyou">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>570</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>242</y>
+     <width>311</width>
+     <height>192</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>271</x>
+     <y>475</y>
+     <width>58</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="jiaqun">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>570</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>620</y>
+     <width>66</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_friend">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>620</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>friend</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_group">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>620</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>group</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
