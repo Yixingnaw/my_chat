@@ -25,7 +25,7 @@ public:
     QLineEdit *password;
     QLabel *label;
     QLabel *label_2;
-    QPushButton *pushButton;
+    QPushButton *sign_up;
 
     void setupUi(QWidget *signUp)
     {
@@ -34,19 +34,19 @@ public:
         signUp->resize(510, 340);
         nike_name = new QLineEdit(signUp);
         nike_name->setObjectName(QString::fromUtf8("nike_name"));
-        nike_name->setGeometry(QRect(130, 70, 151, 41));
+        nike_name->setGeometry(QRect(140, 130, 151, 41));
         password = new QLineEdit(signUp);
         password->setObjectName(QString::fromUtf8("password"));
-        password->setGeometry(QRect(132, 144, 151, 41));
+        password->setGeometry(QRect(140, 200, 151, 41));
         label = new QLabel(signUp);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(310, 90, 67, 17));
+        label->setGeometry(QRect(320, 130, 67, 17));
         label_2 = new QLabel(signUp);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(310, 150, 67, 17));
-        pushButton = new QPushButton(signUp);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(170, 250, 89, 25));
+        label_2->setGeometry(QRect(320, 220, 67, 17));
+        sign_up = new QPushButton(signUp);
+        sign_up->setObjectName(QString::fromUtf8("sign_up"));
+        sign_up->setGeometry(QRect(170, 280, 89, 25));
 
         retranslateUi(signUp);
 
@@ -58,7 +58,7 @@ public:
         signUp->setWindowTitle(QCoreApplication::translate("signUp", "Form", nullptr));
         label->setText(QCoreApplication::translate("signUp", "nikename", nullptr));
         label_2->setText(QCoreApplication::translate("signUp", "password", nullptr));
-        pushButton->setText(QCoreApplication::translate("signUp", "sign_up", nullptr));
+        sign_up->setText(QCoreApplication::translate("signUp", "sign_up", nullptr));
     } // retranslateUi
 
 };

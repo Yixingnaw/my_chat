@@ -8,11 +8,28 @@
 #include<QByteArray>
 #include<QMessageBox>
 #include<QDebug>
+#include<QFileDialog>
+#include<QLabel>
+#include <QSignalMapper>
+#include<imagechange.h>
 signUp::signUp(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::signUp)
 {
     ui->setupUi(this);
+    head_label=new myheadlable(this);
+    head_label-> setText("选择头像");
+    head_label->setMinimumSize(100, 100);
+    head_label->setStyleSheet("QLabel { background-color: white; border: 1px solid #000; padding: 10px; }");
+
+    head_label->setGeometry(140, 5, 150, 90);
+
+
+     connect(head_label,&myheadlable::imagepath,[&](const QString &image){
+              imagepash=image;
+     });
+     connect(ui->sign_up,&QPushButton::clicked,this,&signUp:: pushButton_clicked);
+
 }
 sginUpSocket::sginUpSocket():sign_up(){
 
@@ -46,40 +63,56 @@ signUp::~signUp()
     delete ui;
 
 }
-void signUp::on_pushButton_clicked()
-{
-    if(ui->nike_name->text()==""||ui->password->text()=="")
+
+void signUp:: pushButton_clicked(){
+  if(ui->nike_name->text()==""||ui->password->text()==""||imagepash=="")
     {QMessageBox * local_message=new QMessageBox();
         local_message->setText("please input valied message");
         local_message->show();
+        return;
      }
 
     sginUpSocket *sign_up_sockt=new sginUpSocket();//connect 9999 server port/ipv4;
     qDebug()<<"client has connected";
                                                     //  send json message
                                                          // 创建 JSON 对象
+
            QString nikename=ui->nike_name->text();
            QString password=ui->password->text();
-            QJsonObject jsonObject;
+           QByteArray dataPacket;
+            dataPacket.append(imagechange()(imagepash));
+
+           QJsonObject jsonObject;
             jsonObject["nikename"] = nikename;
             jsonObject["password"] = password;
 
-                                                          // 将 JSON 对象转换为 JSON 文档
-            QJsonDocument jsonDocument(jsonObject);
+         //   QByteArray jsonBytes = QJsonDocument(jsonObject).toJson();
 
-                                                            // 将 JSON 文档转换为字节数组
-            QByteArray jsonData = jsonDocument.toJson();
+                         // 将 JSON 对象转换为 JSON 文档
+      QJsonDocument jsonDocument(jsonObject);
 
-            // 发送 JSON 数据
-            sign_up_sockt->sign_up.write(jsonData);
+         QByteArray jsonBytes = jsonDocument.toJson();
+
+          int json_size=jsonBytes.size();
+          jsonBytes.append(96-json_size,' ');
+          jsonBytes.append(4,char(json_size));
+          jsonBytes.append(dataPacket);
+            sign_up_sockt->sign_up.write(jsonBytes);
+
            qDebug()<<"client has send over";
 
             sign_up_sockt->sign_up.waitForBytesWritten();
 
+           QObject:: connect(&sign_up_sockt->sign_up, &QTcpSocket::disconnected, [sign_up_sockt](){
+                // 断开信号触发时，删除 QTcpSocket 对象
+                sign_up_sockt->sign_up.deleteLater();
+            });
 
 }
+
 
 
 sginUpSocket::~sginUpSocket(){
 
 }
+

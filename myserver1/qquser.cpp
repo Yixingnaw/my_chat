@@ -4,15 +4,15 @@
 #include<string>
 #include"glob.h"
 #include<QString>
-qqUser::qqUser(QString user_name,QString pass_word,QString nikeName)
-    :username(user_name),password(pass_word),nikename(nikeName)
+qqUser::qqUser(QString user_name,QString pass_word,QString nikeName,QString xx)
+    :username(user_name),password(pass_word),nikename(nikeName),user_phonte(xx)
 {
-
+       
 }
 
 
     // 比较操作符，用于哈希表中的比较
-    bool qqUser::operator==(const qqUser& other) const {
+ bool qqUser::operator==(const qqUser& other) const {
         return username == other.username && password == other.password;
 
     }
@@ -59,7 +59,6 @@ qqUser::qqUser(QString user_name,QString pass_word,QString nikeName)
         std::swap(user_phonte, other.user_phonte);
     }
 
-   
 
 bool loadUserByUserName(QString usr_name) {
 
@@ -71,3 +70,6 @@ bool loadUserByUserName(QString usr_name) {
 bool setUser(const qqUser& usr){
 
 }
+
+
+

@@ -16,12 +16,41 @@
   <widget class="QListWidget" name="friends">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>9</y>
+     <x>10</x>
+     <y>20</y>
      <width>311</width>
      <height>192</height>
     </rect>
    </property>
+   <item>
+    <property name="text">
+     <string>新建项目</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>新建项目</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>新建项目</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>新建项目</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../../../Downloads/1084d9bf605afabffe77648883dd0047.jpeg</normaloff>../../../../../Downloads/1084d9bf605afabffe77648883dd0047.jpeg</iconset>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>新建项目</string>
+    </property>
+   </item>
   </widget>
   <widget class="QLineEdit" name="jiahaoyou">
    <property name="geometry">
@@ -36,27 +65,17 @@
   <widget class="QListWidget" name="listWidget">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>242</y>
+     <x>10</x>
+     <y>250</y>
      <width>311</width>
      <height>192</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>271</x>
-     <y>475</y>
-     <width>58</width>
-     <height>25</height>
     </rect>
    </property>
   </widget>
   <widget class="QLineEdit" name="jiaqun">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>130</x>
      <y>570</y>
      <width>91</width>
      <height>21</height>
@@ -92,7 +111,7 @@
   <widget class="QPushButton" name="add_group">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>130</x>
      <y>620</y>
      <width>89</width>
      <height>25</height>
@@ -100,6 +119,42 @@
    </property>
    <property name="text">
     <string>group</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="head">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>470</y>
+     <width>67</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>500</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="group_create">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>620</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>group_create</string>
    </property>
   </widget>
  </widget>

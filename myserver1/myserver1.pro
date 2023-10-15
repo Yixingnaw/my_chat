@@ -20,6 +20,7 @@ SOURCES += \
     chat.cpp \
     classHandle.cpp \
     global.cpp \
+    imagechangge.cpp \
     main.cpp \
     qquser.cpp \
     sql.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     chat.h \
     classHandle.h \
     global.h \
+    imagechangge.h \
     qquser.h \
     sql.h \
     tcpserver.h \

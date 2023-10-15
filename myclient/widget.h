@@ -1,9 +1,12 @@
 #ifndef WIDGET_H
 #define WIDGET_H
-
+#include<thread>
 #include <QWidget>
 #include<QTcpSocket>
 #include"qqcontact.h"
+#include<QUdpSocket>
+#include<mutex>
+#include<QSet>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -21,11 +24,11 @@ private slots:
     void on_sign_up_clicked();
 
     void on_log_on_clicked();
-
 private:
     Ui::Widget *ui;
 public:
     QTcpSocket *log_on;
     qqContact* qq_contact;
+
 };
 #endif // WIDGET_H

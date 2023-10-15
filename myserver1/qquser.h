@@ -7,7 +7,7 @@ class qqUser
 {
 
 public:
- qqUser(QString user_name="root",QString pass_word="123456",QString nikeName="马保国");
+ qqUser(QString user_name="root",QString pass_word="123456",QString nikeName="马保国",QString xx="");
    void swap(qqUser& other) noexcept ;
 
     qqUser(const qqUser&)noexcept;

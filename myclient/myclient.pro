@@ -16,18 +16,31 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chatui.cpp \
+    friendchatwoker.cpp \
+    groupcreate.cpp \
+    imagechange.cpp \
     main.cpp \
+    myheadlable.cpp \
     qqcontact.cpp \
+    qquser.cpp \
     signup.cpp \
     widget.cpp
 
 HEADERS += \
+    chatui.h \
+    friendchatwoker.h \
+    groupcreate.h \
+    imagechange.h \
+    myheadlable.h \
     qqcontact.h \
+    qquser.h \
     signup.h \
     widget.h
 
 FORMS += \
-    chat.ui \
+    chatui.ui \
+    groupcreate.ui \
     qqcontact.ui \
     signup.ui \
     widget.ui

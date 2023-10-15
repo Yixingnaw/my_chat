@@ -28,18 +28,23 @@ sql::sql()
     //
 bool sql::executeQuery(const QString &queryStr)
       {
-          mutx.lock();
+       std::mutex mutx;
+         std::lock_guard<std::mutex>  a(mutx);                               // qDebug()<<"shujuku zi dai  suo shang le mei";
+
           if (query.exec(queryStr))    //
   {
+
               return true;
           }
           else
           {
               qDebug() << "Error executing query: " << query.lastError().text();
+
               return false;
           }
-          mutx.unlock();
+
       }
+
 QSqlQuery& sql::fquery(){
 
     return   query;

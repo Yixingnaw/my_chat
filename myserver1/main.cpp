@@ -6,6 +6,7 @@
 #include<thread>
 #include<QSqlError>
 #include<iostream>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
         qDebug() << "Error executing query: " << db.query.lastError().text();
     }
     Widget w;
+
 
     w.show();
     return a.exec();

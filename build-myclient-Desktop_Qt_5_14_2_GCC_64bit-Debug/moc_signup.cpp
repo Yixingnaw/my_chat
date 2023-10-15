@@ -93,7 +93,7 @@ int sginUpSocket::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 struct qt_meta_stringdata_signUp_t {
     QByteArrayData data[3];
-    char stringdata0[30];
+    char stringdata0[27];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -103,11 +103,11 @@ struct qt_meta_stringdata_signUp_t {
 static const qt_meta_stringdata_signUp_t qt_meta_stringdata_signUp = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "signUp"
-QT_MOC_LITERAL(1, 7, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(2, 29, 0) // ""
+QT_MOC_LITERAL(1, 7, 18), // "pushButton_clicked"
+QT_MOC_LITERAL(2, 26, 0) // ""
 
     },
-    "signUp\0on_pushButton_clicked\0"
+    "signUp\0pushButton_clicked\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -139,7 +139,7 @@ void signUp::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<signUp *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->on_pushButton_clicked(); break;
+        case 0: _t->pushButton_clicked(); break;
         default: ;
         }
     }

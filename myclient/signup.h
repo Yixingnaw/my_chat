@@ -6,6 +6,9 @@
 #include<QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include"myheadlable.h"
+#include <QSignalMapper>
+
 namespace Ui {
 class signUp;
 }
@@ -37,12 +40,15 @@ public:
     ~signUp();
 
 private slots:
-    void on_pushButton_clicked();
+    //void on_pushButton_clicked();
+    void pushButton_clicked();
+
 
 private:
     Ui::signUp *ui;
-
-
+    myheadlable *lable;
+     myheadlable *head_label;
+     QString imagepash;
 };
 
 
