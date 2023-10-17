@@ -4,7 +4,7 @@
 #include <QImage>
 #include <QBuffer>
 #include <QImageWriter>
-QByteArray imagechange:: operator()(QString & imgfile){
+QByteArray imagechange:: operator()(const QString & imgfile){
 
 
 // 加载原始图像
@@ -20,9 +20,12 @@ QImage scaledImage = originalImage.scaled(newWidth, newHeight, Qt::KeepAspectRat
 // 创建一个内存缓冲区
 QBuffer buffer;
 buffer.open(QIODevice::WriteOnly);
+QRegularExpression regex("\\.([^.]+)$"); // 匹配最后一个点号后面的字符
 
+  QRegularExpressionMatch match = regex.match(imgfile);
+    QString fileExtension = match.captured(1);
 // 创建图像编写器并设置图像质量
-QImageWriter writer(&buffer, "PNG"); // 选择适当的格式，如PNG
+QImageWriter writer(&buffer,fileExtension.toUtf8() ); // 选择适当的格式，如PNG
 writer.setQuality(50); // 设置图像质量，范围是0到100
 
 // 将缩小后的图像写入缓冲区
@@ -46,7 +49,7 @@ if (imageData.size() > 20 * 1024) {
   }
 QImage   imagechange:: byte_to_qimage(QByteArray& imagebyte){
     QImage image;
-   if(! image.loadFromData(QByteArray::fromBase64(imagebyte))){qDebug()<<"read image filed";throw"read imagefile" ;}
+   if(! image.loadFromData(QByteArray::fromBase64(imagebyte))){qDebug()<<"read image filed";throw   QString("read imagefile") ;}
 
    return  image;
 }

@@ -39,14 +39,6 @@ public:
             qqContact->setObjectName(QString::fromUtf8("qqContact"));
         qqContact->resize(338, 663);
         friends = new QListWidget(qqContact);
-        new QListWidgetItem(friends);
-        new QListWidgetItem(friends);
-        new QListWidgetItem(friends);
-        QIcon icon;
-        icon.addFile(QString::fromUtf8("../../../../../Downloads/1084d9bf605afabffe77648883dd0047.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
-        QListWidgetItem *__qlistwidgetitem = new QListWidgetItem(friends);
-        __qlistwidgetitem->setIcon(icon);
-        new QListWidgetItem(friends);
         friends->setObjectName(QString::fromUtf8("friends"));
         friends->setGeometry(QRect(10, 20, 311, 192));
         jiahaoyou = new QLineEdit(qqContact);
@@ -85,21 +77,6 @@ public:
     void retranslateUi(QWidget *qqContact)
     {
         qqContact->setWindowTitle(QCoreApplication::translate("qqContact", "Form", nullptr));
-
-        const bool __sortingEnabled = friends->isSortingEnabled();
-        friends->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = friends->item(0);
-        ___qlistwidgetitem->setText(QCoreApplication::translate("qqContact", "\346\226\260\345\273\272\351\241\271\347\233\256", nullptr));
-        QListWidgetItem *___qlistwidgetitem1 = friends->item(1);
-        ___qlistwidgetitem1->setText(QCoreApplication::translate("qqContact", "\346\226\260\345\273\272\351\241\271\347\233\256", nullptr));
-        QListWidgetItem *___qlistwidgetitem2 = friends->item(2);
-        ___qlistwidgetitem2->setText(QCoreApplication::translate("qqContact", "\346\226\260\345\273\272\351\241\271\347\233\256", nullptr));
-        QListWidgetItem *___qlistwidgetitem3 = friends->item(3);
-        ___qlistwidgetitem3->setText(QCoreApplication::translate("qqContact", "\346\226\260\345\273\272\351\241\271\347\233\256", nullptr));
-        QListWidgetItem *___qlistwidgetitem4 = friends->item(4);
-        ___qlistwidgetitem4->setText(QCoreApplication::translate("qqContact", "\346\226\260\345\273\272\351\241\271\347\233\256", nullptr));
-        friends->setSortingEnabled(__sortingEnabled);
-
         label->setText(QString());
         add_friend->setText(QCoreApplication::translate("qqContact", "friend", nullptr));
         add_group->setText(QCoreApplication::translate("qqContact", "group", nullptr));

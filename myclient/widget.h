@@ -7,6 +7,7 @@
 #include<QUdpSocket>
 #include<mutex>
 #include<QSet>
+#include"global.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -30,5 +31,8 @@ public:
     QTcpSocket *log_on;
     qqContact* qq_contact;
 
+    bool data_initial;//用来开启客户端对服务器界面的请求,区分不同的数据
+    QByteArray ui_data;
+    qint32 data_length;//初始化界面数据长度
 };
 #endif // WIDGET_H

@@ -13,6 +13,7 @@
 #include<QDir>
 #include"imagechangge.h"
 #include<QHostAddress>
+#include<unordered_set>
 classHandle::classHandle(qintptr socketDescriptor){
     socket_Descriptor=socketDescriptor;
     image_count=0;
@@ -20,18 +21,33 @@ classHandle::classHandle(qintptr socketDescriptor){
 
 void classHandle::run(){
 
-        QTcpSocket socket;
+      bool succeein=false;//用户是否登录成功
+      QTcpSocket socket;
+      qqUser *new_user;//用户信息
+    int my_id;       //用户id
+      std::unordered_map<int,qqUser>::iterator qquser_id_it;//gloabal用户id指针，方便断开连接时删除
+   //disconneted
+      std::unordered_map<qqUser, QTcpSocket*>::iterator   it;//gloable用户指针，方便断开连接时删除
+   QVector<int> uer_friend_ids;                            //用户所有好友信息id
+   QVector<int>user_online_friend_ids;                     //用户在线好友信息id
+   std::unordered_set<qqUser> online_friend;                //用户在线好友信息
+        QObject::connect(&socket,&QTcpSocket::disconnected,[&]{
+            QJsonObject jsonObject;
+              jsonObject["type"]="-1";
+              jsonObject["value"]="not found server";
+              mutex.lock();
+              if(succeein){
+             onlineUsers.erase(it);
+             onlineIDs.erase(qquser_id_it);}
+              qDebug()<<"concc"<<onlineUsers.size();
+             mutex.unlock();
+        });
 
         if (!socket.setSocketDescriptor(socket_Descriptor) ){
             qDebug() << "Failed to set socket descriptor.";
             return;
         }
-       qqUser *new_user;
-       int my_id;
-           std::unordered_map<int,qqUser>::iterator qquser_id_it;
-   //disconneted
-           std::unordered_map<qqUser, QTcpSocket*>::iterator   it;
-       
+
         while (socket.state() == QAbstractSocket::ConnectedState) {
             if (socket.waitForReadyRead()) {
 
@@ -85,7 +101,7 @@ void classHandle::run(){
                             jsonObject["value"]="already online";
 
                             QJsonDocument jsonDocument(jsonObject);
-                               // 将 JSON 文档转换为字节数组
+
                                QByteArray jsonData = jsonDocument.toJson();
                         socket.write(jsonData);
                                                                                                      qDebug()<<jsonData;
@@ -93,24 +109,21 @@ void classHandle::run(){
                        
                      }// success sign in,  jia ru zai xian lie biao
                      else {
-                       mutex_rb.lock();
+                       mutex.lock();
                         QString user_name=new_user->getUsername();
-                        db.query.prepare("select");
-                       mutex_rb.unlock();
-//hai mei  xie wan
-                       mutex.lock();                    
+                   succeein=true;
                   auto xx=        onlineUsers.emplace(*new_user,&socket);
                   auto xxx=onlineIDs.emplace(my_id,*new_user);
                    it=xx.first;
                     qquser_id_it=xxx.first;
                        mutex.unlock();                                                                              qDebug()<<"concc"<<onlineUsers.size();
+                                     //通知每个在线好友有新的好友登录
                           QJsonObject jsonObject;
                           jsonObject["type"]="1";
-                          jsonObject["value"]="succues online";
                           QJsonDocument jsonDocument(jsonObject);
                           // 将 JSON 文档转换为字节数组
                              QByteArray jsonData = jsonDocument.toJson();                                              qDebug()<<jsonData;
-                      socket.write(jsonData);
+                            socket.write(jsonData);
 
                      }
                   }
@@ -132,7 +145,7 @@ void classHandle::run(){
 {                     QString use_Name=newObject.value("username").toString();
                        QString my_Name;
                                                                                                          qDebug()<<"fuwuqi kaishi tianjia";
-          auto    it  = std::find_if(onlineUsers.begin(), onlineUsers.end(), [&new_user](const std::pair<const qqUser, QTcpSocket*>& element) {
+          auto    it  = std::find_if(onlineUsers.begin(), onlineUsers.end(), [&](const std::pair<const qqUser, QTcpSocket*>& element) {
                            return element.first == *new_user;
                        });
                           my_Name=(*it).first.getUsername();
@@ -177,15 +190,14 @@ void classHandle::run(){
                           }
                           //查看好友列表里面有没有了
                           mutex_rb.lock();
-                          db.query.prepare("SELECT CASE "
-                                        "  WHEN user_id1 = :id THEN user_id2 "
-                                        "  WHEN user_id2 = :id THEN user_id1 "
-                                        "END AS friend_id "
-                                        "FROM friendships "
-                                        "WHERE user_id1 = :id OR user_id2 = :id");
-                          db.query.bindValue(":id", my_id);
-                          db.query.exec();
-                         if (db.query.next()) {
+
+                          QString queryString = QString("SELECT * FROM friendships "
+                                                        "WHERE "
+                                                        "(user_id1 = %1 AND user_id2 = %2) "
+                                                        "OR (user_id1 = %2 AND user_id2 = %1)")
+                                              .arg(my_id).arg(other_id);
+
+                         if (db.executeQuery(queryString)&& db.query.next()) {
                              QJsonObject jsonObject;
                              jsonObject["type"]="10";
                              jsonObject["value"]="是你的好友了，你加你妈呢";
@@ -193,9 +205,10 @@ void classHandle::run(){
                                 // 将 JSON 文档转换为字节数组
                            QByteArray jsonData = jsonDocument.toJson();
                          socket.write(jsonData);
-                          } mutex_rb.unlock();
-                            break;
-                                                                                                                        qDebug()<<"kai shi cha ru le";
+                         mutex_rb.unlock();
+                                             break;
+                          }
+                               mutex_rb.unlock();                                                                                          qDebug()<<"kai shi cha ru le";
                           mutex_rb.lock();
                          db.query.prepare("INSERT INTO friendships (user_id1, user_id2) VALUES (:id1, :id2)");
                           db.query.bindValue(":id1", my_id);
@@ -260,7 +273,7 @@ void classHandle::run(){
                          .arg(my_id);
                      db.query.clear();
                      mutex_rb.lock();
-                                                    //在检查群表里面有没有自己
+                                                      //在检查群表里面有没有自己
            if(db.executeQuery(queryString) &&db.query.next()){
              QJsonObject jsonObject;
              jsonObject["type"]="70";
@@ -289,16 +302,81 @@ void classHandle::run(){
 
 }
                       break;
-                   case 3:                //the client  groups image  get echo
-{
+                   case 3:                                     //界面初始化
+{               //查找用户所有的好友id,保存在vector中
+
+             QString queryString = QString("SELECT users.* "
+                                                    "FROM friendships "
+                                                    "JOIN users ON (friendships.user_id1 = users.user_id OR friendships.user_id2 = users.user_id) "
+                                                    "WHERE (friendships.user_id1 = %1 OR friendships.user_id2 = %1) AND users.user_id != %1")
+                                          .arg(my_id);
+             db.executeQuery(queryString);
+               mutex_rb.lock();
+               while(db.query.next()) {
+                   int id=db.query.value(0).toInt();
+                   uer_friend_ids.push_back(id);
+               }mutex_rb.unlock();
+               //
+               for(auto value:onlineIDs){
+                   for(auto id_:uer_friend_ids){
+                       if(id_==value.first&&id_!=my_id){
+                           user_online_friend_ids.push_back(id_);
+                       }
+                   }
+               }
+               for(auto x:user_online_friend_ids){
+                   online_friend.emplace(onlineIDs[x]);
+               }
+               QJsonObject mainobject;
+               mainobject["type"]="41";
+               QJsonArray qquser_json_array;
+               for(auto x:online_friend){
+                   QJsonObject object;
+                   object["username"]=x.getUsername();
+                   object["nickname"]=x.getNikename();
+                   object["photoaddress"]=x.getUserPhone();
+
+                    qquser_json_array.append(object);
+               }
+               mainobject["value"]=qquser_json_array;
+               QJsonDocument document(mainobject);
+               QByteArray senddata=document.toJson();
+
+               qint32 lenght=senddata.length();
+               QByteArray data_json;
+                data_json+=intToBytes(lenght);
+               data_json+=senddata;//jsonlength和jsondata
+                                          qDebug()<<   bytesToInt(data_json.left(4));
+
+               QByteArray imgdata;  //imagedata
+               for(auto x:online_friend){
+                   QString address=x.getUserPhone();
+                   QByteArray img;
+         try      {    img=imagechange()(x.getUserPhone());}
+                   catch(const QString& x){qDebug()<<x;}
+                   qint32 imgLength=img.length();
+                   QByteArray data_json;
+                    data_json+=intToBytes(imgLength);
+                   data_json+=img;
+                   imgdata+=data_json;
+               }
+               qint32 img_length=imgdata.length();
+
+              QByteArray data;
+              qint32 data_length=data_json.length()+img_length+4;// 数据总长
+
+             data+=intToBytes(data_length);
+              data+=data_json;
+              data+=imgdata;
+              qint32 length_json=data.mid(4,4).toInt();
+             qint32 leth=bytesToInt(data.left(4));
+             qDebug()<<length_json<<" "<<leth;
+               socket.write(data);
+
 
 }
                       break;
-                   case 4:                //the client  friends image get echo
-{
 
-}
-                      break;
                    case 5:                 //the client friends chat
 {
 
@@ -362,24 +440,7 @@ void classHandle::run(){
 
 
         }
-        QJsonObject jsonObject;
-          jsonObject["type"]="0";
-          jsonObject["value"]="input error";
-          QJsonDocument jsonDocument(jsonObject);
-            // 将 JSON 文档转换为字节数组
-             QByteArray jsonData = jsonDocument.toJson();
 
-        socket.write(jsonData);
-        mutex_rb.lock();
-       onlineUsers.erase(it);
-       onlineIDs.erase(qquser_id_it);
-       mutex_rb.unlock();
-       QObject::connect(&socket,&QTcpSocket::disconnected,[]{
-           QJsonObject jsonObject;
-             jsonObject["type"]="-1";
-             jsonObject["value"]="not found server";
-       });
-        socket.deleteLater();
            return;
 }
 

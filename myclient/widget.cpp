@@ -16,14 +16,30 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
     log_on=new QTcpSocket();
     qq_contact=new qqContact(log_on);
+    data_initial=false;
 
 
    // qq_contact->hide();
     connect(log_on,&QTcpSocket::readyRead,[&](){
 
         QByteArray date=log_on->readAll();
-        QJsonDocument  newDocument = QJsonDocument::fromJson(date);
-           QJsonObject   newObject = newDocument.object();
+         QJsonDocument  newDocument;
+          QJsonObject   newObject;
+          if(!data_initial){
+          newDocument = QJsonDocument::fromJson(date);
+          newObject = newDocument.object();}
+          else{    // 得到请求界面的数据
+               ui_data.append(date);
+              if(ui_data.size()<bytesToInt(ui_data.left(4))){// 读完请求界面的数据
+                  return ;
+              }
+              if(bytesToInt(ui_data.mid(4,4))==43){ data_initial=false      ;return ;}//第一次登录
+              qint32 length_json= bytesToInt(  ui_data.mid(4,4));
+              QByteArray data=ui_data.mid(8,length_json);
+              newDocument = QJsonDocument::fromJson(data);
+              newObject = newDocument.object();
+
+          }
            QString typeString = newObject.value("type").toString();
            // 确保 "type" 字段的值确实是一个整数的字符串表示
            bool conversionOk;
@@ -38,7 +54,13 @@ Widget::Widget(QWidget *parent)
            }break;
            case 1:{//success in //bind udp
                qq_contact->show();
-
+             //请求界面初始化
+               data_initial=true;
+                    QJsonObject jsonObject;
+                    jsonObject["type"]="3";
+                     QJsonDocument jsonDocument(jsonObject);
+                     QByteArray jsonData = jsonDocument.toJson();
+                     log_on->write(jsonData);
                hide();
            }break;
            case 10:{
@@ -64,12 +86,23 @@ Widget::Widget(QWidget *parent)
            }break;
            case 31:{
 
+
            }break;
 
            case 40:{
 
            }break;
            case 41:{
+              QByteArray image__data=ui_data.mid(8+bytesToInt(ui_data.mid(4,4)));
+
+               QJsonArray jsonArray=newObject["value"].toArray();
+               // 将 JSON 数组转换为 JSON 文档
+               QJsonDocument jsonDoc(jsonArray);
+               // 将 JSON 文档转换为 QByteArray
+               QByteArray byteArray = jsonDoc.toJson();
+
+                 qq_contact->initial_friend_ui(byteArray,image__data);
+                 data_initial=false;
 
            }break;
            case 50:{

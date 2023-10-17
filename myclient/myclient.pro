@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     chatui.cpp \
     friendchatwoker.cpp \
+    global.cpp \
     groupcreate.cpp \
     imagechange.cpp \
     main.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
 HEADERS += \
     chatui.h \
     friendchatwoker.h \
+    global.h \
     groupcreate.h \
     imagechange.h \
     myheadlable.h \

@@ -1,4 +1,4 @@
-#ifndef CLASSHANDLE_H
+﻿#ifndef CLASSHANDLE_H
 #define CLASSHANDLE_H
 #include <QThreadPool>
 #include <QObject>
@@ -6,6 +6,23 @@
 #include<QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include<QJsonArray>
+#include<QHostAddress>
+#include<unordered_set>
+#include<QTcpSocket>
+#include"global.h"
+#include"sql.h"
+#include"qquser.h"
+#include<QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include<algorithm>
+#include<QByteArray>
+#include<QSqlError>
+#include<mutex>
+#include<QDir>
+#include"imagechangge.h"
+#include<QHostAddress>
 class classHandle : public QRunnable
 {
 
@@ -19,10 +36,13 @@ public slots:
 
 private:
    qintptr socket_Descriptor;
-   std::mutex mutex;
-   std::mutex mutex_rb;
+
+
    int image_count;            //the image send counts;
    int groups_image_count;
+
+
+
 
 };
 

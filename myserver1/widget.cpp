@@ -111,9 +111,10 @@ void Widget::on_listen_register_come(){
              // 获取JSON对象中的值
                 QString     nike_name = newObject.value("nikename").toString();
                         QString    pass_word=newObject.value("password").toString();
-         QImage photo;bool bool_image=true;
+              QImage photo;
+               bool bool_image=true;
          try{       photo=       imagechange().byte_to_qimage(imageData);}
-                        catch (QString&){
+                        catch (QString& x){
                             qDebug()<<"image read erro";
                             bool_image=false;
                         }
@@ -139,7 +140,7 @@ void Widget::on_listen_register_come(){
               else {
                  houzhui= imagechange().image_postfix(photo);
               }
-              QString relativePath = "image/"+ user_name; // 以当前工作目录为起点的相对路径
+              QString relativePath = "image/"+ user_name+houzhui; // 以当前工作目录为起点的相对路径
               // 将相对路径转换为绝对路径
               QString absolutePath = QDir(currentDir).filePath(relativePath);
                 photo.save(absolutePath);

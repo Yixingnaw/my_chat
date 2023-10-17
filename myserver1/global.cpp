@@ -4,9 +4,12 @@
 #include"qquser.h"
 #include<string>
 #include<memory>
+#include<QMutex>
 std::unordered_map<qqUser, QTcpSocket*> onlineUsers;
 sql db;
 std::unordered_map<int,qqUser> onlineIDs;
+std::mutex mutex;
+std::mutex mutex_rb;
 std::shared_ptr<std::string> generateRandomAccount() {
     // 设置随机种子
     srand(time(NULL));
@@ -23,4 +26,17 @@ std::shared_ptr<std::string> generateRandomAccount() {
         delete  account;
         
     return  string_ptr;
+}
+QByteArray intToBytes(qint32 value) {
+    QByteArray byteArray;
+    QDataStream stream(&byteArray, QIODevice::WriteOnly);
+    stream << value;
+    return byteArray;
+}
+// 将 QByteArray 转换为 qint32
+qint32 bytesToInt(const QByteArray &byteArray) {
+    qint32 value = 0;
+    QDataStream stream(byteArray);
+    stream >> value;
+    return value;
 }

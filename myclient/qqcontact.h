@@ -9,6 +9,9 @@
 #include"groupcreate.h"
 #include<QHostAddress>
 #include<mutex>
+#include<QJsonArray>
+#include"imagechange.h"
+#include"global.h"
 namespace Ui {
 class qqContact;
 }
@@ -40,8 +43,13 @@ public:
      QUdpSocket *udpSocket;
      std::unordered_map<qqUser,QImage*> friends;//
      std::mutex mutex_friend;
+
      QSet<QString> ip_frined;  //记录好友界面数
      std::mutex mutex_groups;  //、记录群界面数
+
+//function
+public:
+       void  initial_friend_ui(const QByteArray& x,const QByteArray& imagedata);
   //not complete     QSet<QString>
 };
 

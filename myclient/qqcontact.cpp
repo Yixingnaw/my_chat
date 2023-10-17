@@ -10,6 +10,7 @@
 #include<QMessageBox>
 
 qqContact::qqContact(QTcpSocket *xx,QWidget *parent) :
+
     QWidget(parent),
     socket(xx),
     ui(new Ui::qqContact)
@@ -18,6 +19,8 @@ qqContact::qqContact(QTcpSocket *xx,QWidget *parent) :
      udpSocket = new QUdpSocket(this);
      udpSocket->bind(QHostAddress::Any, 12345);
     //  connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
+
+
 }
 
 qqContact::~qqContact()
@@ -107,4 +110,40 @@ void qqContact::on_add_group_clicked()
 
       QByteArray jsonData = jsonDocument.toJson();
       socket->write(jsonData);
+}
+void  qqContact:: initial_friend_ui(const QByteArray& jsonbytery,const QByteArray& image_data){
+    QJsonDocument receivedDocument = QJsonDocument::fromJson(jsonbytery); //  是接收到的字节数组
+     qint32 legth=0;
+    if (!receivedDocument.isNull()) {
+        if (receivedDocument.isArray()) {
+            QJsonArray receivedArray = receivedDocument.array();
+
+            for (int i = 0; i < receivedArray.size(); ++i) {
+                QJsonObject jsonObject = receivedArray[i].toObject();
+
+                // 提取用户名和昵称
+                QString username = jsonObject["username"].toString();
+                QString nickname = jsonObject["nickname"].toString();
+                QString photo= jsonObject["photoaddress"].toString();
+                 // 获得图片数据
+                QByteArray img=image_data.mid(legth+4,bytesToInt(image_data.mid(legth,4)));
+                legth+=(4+bytesToInt(image_data.mid(legth,4)));
+                 QImage img__  ;
+                try {
+                  img__   =imagechange().byte_to_qimage(img);
+                } catch (const QString& x) {
+                    qDebug()<<x;
+
+                }
+                QPixmap myPixmap = QPixmap::fromImage(img__);
+                QIcon myIcon(myPixmap);
+               QListWidgetItem *item=new QListWidgetItem(ui->friends);
+
+               item->setText(nickname);
+               item->setIcon(myIcon);
+
+        }
+    }
+
+}
 }

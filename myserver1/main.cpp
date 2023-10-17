@@ -6,7 +6,7 @@
 #include<thread>
 #include<QSqlError>
 #include<iostream>
-
+#include"global.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -26,6 +26,17 @@ int main(int argc, char *argv[])
     {
         qDebug() << "Error executing query: " << db.query.lastError().text();
     }
+
+    QThread *currentThread = QThread::currentThread();
+       Qt::HANDLE threadId = currentThread->currentThreadId();
+
+       // 获取当前线程的名字
+       const char *threadName = currentThread->objectName().toUtf8().constData();
+
+       // 输出线程信息
+       qDebug() << "Current Thread ID:" << threadId;
+       qDebug() << "Current Thread Name:" << threadName;
+
     Widget w;
 
 
