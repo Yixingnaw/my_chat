@@ -43,7 +43,7 @@ if (imageData.size() > 20 * 1024) {
     writer.write(scaledImage);
     imageData = buffer.data();
 }
-                                                        qDebug()<<"open file file success";
+                                                      //  qDebug()<<"open file file success";
         return imageData.toBase64();
 
   }
@@ -77,7 +77,7 @@ QString    imagechange:: image_postfix(QImage& image){
                     break;
             }
 
-            qDebug() << "图像已保存为：" ;
+            qDebug() << "图像已保存为："<<fileExtension<<"格式" ;
             return fileExtension;
         } else {
             qDebug() << "图像加载失败";

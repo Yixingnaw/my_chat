@@ -2,7 +2,7 @@ QT       += core gui
 QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += sql
-
+QT += core
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -22,7 +22,9 @@ SOURCES += \
     global.cpp \
     imagechangge.cpp \
     main.cpp \
+    mytcpsockt.cpp \
     qquser.cpp \
+    sigleinstance.cpp \
     sql.cpp \
     tcpserver.cpp \
     widget.cpp
@@ -32,7 +34,9 @@ HEADERS += \
     classHandle.h \
     global.h \
     imagechangge.h \
+    mytcpsockt.h \
     qquser.h \
+    sigleinstance.h \
     sql.h \
     tcpserver.h \
     widget.h

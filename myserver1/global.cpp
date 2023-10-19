@@ -5,7 +5,7 @@
 #include<string>
 #include<memory>
 #include<QMutex>
-std::unordered_map<qqUser, QTcpSocket*> onlineUsers;
+std::unordered_map<qqUser, myTcpSockt*> onlineUsers;
 sql db;
 std::unordered_map<int,qqUser> onlineIDs;
 std::mutex mutex;

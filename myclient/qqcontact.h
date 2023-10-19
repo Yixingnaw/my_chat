@@ -35,6 +35,8 @@ private slots:
    //void readPendingDatagrams();
    void on_add_group_clicked();
 
+//   void on_friends_itemDoubleClicked(QListWidgetItem *item);
+   
 public:
     groupcreate *newgroup;
      QTcpSocket *socket;

@@ -32,7 +32,9 @@ public:
     qqContact* qq_contact;
 
     bool data_initial;//用来开启客户端对服务器界面的请求,区分不同的数据
-    QByteArray ui_data;
+     QByteArray ui_data;
+    bool first_initial;//用来接受服务器新登录好友信息
+    QByteArray ui_data_;//用来接受服务器新登录好友界面
     qint32 data_length;//初始化界面数据长度
 };
 #endif // WIDGET_H

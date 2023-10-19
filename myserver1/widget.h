@@ -32,6 +32,7 @@ private:
     tcpServer *listen_socket;
 
      QTcpServer *listen_register_socket;
+     QTcpSocket* new_client=nullptr;//注册套接字
     chat *chatwidget;
 };
 #endif // WIDGET_H

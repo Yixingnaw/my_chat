@@ -1,5 +1,6 @@
 ﻿#ifndef CLASSHANDLE_H
 #define CLASSHANDLE_H
+#include"mytcpsockt.h"
 #include <QThreadPool>
 #include <QObject>
 #include<QTcpSocket>
@@ -23,24 +24,25 @@
 #include<QDir>
 #include"imagechangge.h"
 #include<QHostAddress>
-class classHandle : public QRunnable
+#include"sigleinstance.h"
+#include<QThread>
+class classHandle :public QRunnable
 {
 
 public:
       classHandle(qintptr socketDescriptor);
 void run() override;
-   QString     get_ip_address(QTcpSocket * &socket);
+   QString     get_ip_address(QTcpSocket * socket);
 
 
 public slots:
-
+    void change(bool);
 private:
    qintptr socket_Descriptor;
-
+   bool caohanshu;
 
    int image_count;            //the image send counts;
    int groups_image_count;
-
 
 
 

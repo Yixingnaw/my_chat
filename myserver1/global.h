@@ -10,9 +10,11 @@
 #include <QThread>
 #include<string>
 #include<QDataStream>
+#include"mytcpsockt.h"
+#include"classHandle.h"
 extern   qint32 bytesToInt(const QByteArray &byteArray) ;
 extern sql db;
-extern std::unordered_map<qqUser, QTcpSocket*> onlineUsers;
+extern std::unordered_map<qqUser, myTcpSockt*> onlineUsers;
 extern std::unordered_map<int,qqUser> onlineIDs;
   extern std::mutex mutex;
   extern std::mutex mutex_rb;

@@ -82,18 +82,17 @@ windwows
 void Widget::on_listen_register_come(){
 
                                                                                                         //nei cun xie lou
-           QTcpSocket* new_client=nullptr;
 
          // while(listen_register_socket->waitForNewConnection(-1))break;
             new_client=listen_register_socket->nextPendingConnection();
 
 
-            QObject:: connect(new_client, &QTcpSocket::disconnected, [&new_client](){
+            QObject:: connect(new_client, &QTcpSocket::disconnected, [&](){
                  // 断开信号触发时，删除 QTcpSocket 对象
-               new_client-> deleteLater();
+                   new_client-> deleteLater();
              });
           if (new_client && new_client->state() == QAbstractSocket::ConnectedState)
-         {                                                                                  qDebug()<<" accept lian jie cheng gong";
+         {                                                                                  qDebug()<<" 开始注册";
 
               connect(new_client,&QTcpSocket::readyRead,this,[=](){
                   // 当有新连接时，从套接
@@ -105,7 +104,7 @@ void Widget::on_listen_register_come(){
                QJsonObject       newObject=newDocument.object();
                     QByteArray imageData=receivedData.mid(100);
                
-                                                                                           qDebug()<<receivedData;
+                                                                                         //  qDebug()<<receivedData;
 
 
              // 获取JSON对象中的值
@@ -126,9 +125,9 @@ void Widget::on_listen_register_come(){
               std::shared_ptr<std::string> username =generateRandomAccount();
 
              user_name=(*username).c_str();
-              db.executeQuery("select * from users where username like "+user_name);       qDebug()<<"shu  ju zhao chenggong mei you zhaodao shuju";
+              db.executeQuery("select * from users where username like "+user_name);       //qDebug()<<"shu  ju zhao chenggong mei you zhaodao shuju";
 
-              }while(db.query.value(0).toInt());
+              }while(db.query.next());
 
                
               // 获取当前工作目录
@@ -147,7 +146,7 @@ void Widget::on_listen_register_come(){
                 std::mutex mutex;
              std::lock_guard<std::mutex> lock(mutex);
         db.executeQuery( "INSERT INTO users (password, username, nickname,avatar_url) VALUES ('" + pass_word + "', '" + user_name + "', '" + nike_name + "','"+absolutePath+"');");
-                                                                                           qDebug()<<"shu  ju ca ru chenggong";
+                                                                                           qDebug()<<"注册成功";
       
                                                                                            QJsonObject echo_json;
 
@@ -155,9 +154,10 @@ void Widget::on_listen_register_come(){
               QJsonDocument echojosodocument(echo_json);
               QByteArray ss=echojosodocument.toJson();
               new_client->write(ss);
-                                                                                              qDebug()<<"bie gao wo le";
+                                                                                                                 //  qDebug()<<"bie gao wo le";
               });
  return;}
+          return;
 
 }
 

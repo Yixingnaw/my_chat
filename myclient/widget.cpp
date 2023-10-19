@@ -17,7 +17,7 @@ Widget::Widget(QWidget *parent)
     log_on=new QTcpSocket();
     qq_contact=new qqContact(log_on);
     data_initial=false;
-
+   first_initial=false;
 
    // qq_contact->hide();
     connect(log_on,&QTcpSocket::readyRead,[&](){
@@ -25,21 +25,33 @@ Widget::Widget(QWidget *parent)
         QByteArray date=log_on->readAll();
          QJsonDocument  newDocument;
           QJsonObject   newObject;
-          if(!data_initial){
-          newDocument = QJsonDocument::fromJson(date);
-          newObject = newDocument.object();}
-          else{    // 得到请求界面的数据
-               ui_data.append(date);
-              if(ui_data.size()<bytesToInt(ui_data.left(4))){// 读完请求界面的数据
-                  return ;
-              }
-              if(bytesToInt(ui_data.mid(4,4))==43){ data_initial=false      ;return ;}//第一次登录
-              qint32 length_json= bytesToInt(  ui_data.mid(4,4));
-              QByteArray data=ui_data.mid(8,length_json);
-              newDocument = QJsonDocument::fromJson(data);
+          if(data_initial){
+              ui_data.append(date);
+             if(ui_data.size()<bytesToInt(ui_data.left(4))){//  读完请求界面的数据
+                 return ;
+             }
+             if(bytesToInt(ui_data.mid(4,4))==43){ data_initial=false      ;return ;}//第一次登录
+             qint32 length_json= bytesToInt(  ui_data.mid(4,4));
+             QByteArray data=ui_data.mid(8,length_json);
+             newDocument = QJsonDocument::fromJson(data);
+             newObject = newDocument.object();
+      }
+          else if(!data_initial&&!first_initial)  {   // 得到请求界面的数据
+              newDocument = QJsonDocument::fromJson(date);
               newObject = newDocument.object();
 
-          }
+          }else  if(!data_initial&&first_initial){
+
+              ui_data_.append(date);
+
+             if(ui_data_.size()<bytesToInt(ui_data_.left(4))){//  读完请求界面的数据
+                 return ;
+             }     qint32 length_json= bytesToInt(  ui_data_.mid(4,4));
+             QByteArray data=ui_data_.mid(8,length_json);
+             newDocument = QJsonDocument::fromJson(data);
+             newObject = newDocument.object();
+}
+
            QString typeString = newObject.value("type").toString();
            // 确保 "type" 字段的值确实是一个整数的字符串表示
            bool conversionOk;
@@ -52,8 +64,7 @@ Widget::Widget(QWidget *parent)
                message->show();
                message->setText(xx);
            }break;
-           case 1:{//success in //bind udp
-               qq_contact->show();
+           case 1:{//success in //bind udp            
              //请求界面初始化
                data_initial=true;
                     QJsonObject jsonObject;
@@ -62,6 +73,7 @@ Widget::Widget(QWidget *parent)
                      QByteArray jsonData = jsonDocument.toJson();
                      log_on->write(jsonData);
                hide();
+                 qq_contact->show();
            }break;
            case 10:{
                QString xx=newObject.value("value").toString();
@@ -81,12 +93,28 @@ Widget::Widget(QWidget *parent)
                  message->show();
                message->setText(xx);
            }break;
-           case 30:{
+           case 30:{ //收到服务器更新请求的回应
+                        first_initial=true;//准备更新好友界面
+                        QJsonObject jsonObject;
+                        jsonObject["type"]="8";
+                         QJsonDocument jsonDocument(jsonObject);
+                         QByteArray jsonData = jsonDocument.toJson();
+                         log_on->write(jsonData);
 
            }break;
-           case 31:{
+           case 31:{//用来接受服务器新登录好友界面
+                       first_initial=false;
+                       QByteArray image__data=ui_data_.mid(8+bytesToInt(ui_data_.mid(4,4)));
 
+                        QJsonArray jsonArray=newObject["value"].toArray();
+                        // 将 JSON 数组转换为 JSON 文档
+                        QJsonDocument jsonDoc(jsonArray);
+                        // 将 JSON 文档转换为 QByteArray
+                        QByteArray byteArray = jsonDoc.toJson();
 
+                          qq_contact->initial_friend_ui(byteArray,image__data);
+                          qq_contact->update();
+                             ui_data_.clear();// 每次数据都应该更新
            }break;
 
            case 40:{
@@ -102,6 +130,7 @@ Widget::Widget(QWidget *parent)
                QByteArray byteArray = jsonDoc.toJson();
 
                  qq_contact->initial_friend_ui(byteArray,image__data);
+                 qq_contact->update();
                  data_initial=false;
 
            }break;

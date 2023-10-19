@@ -18,6 +18,7 @@ qqContact::qqContact(QTcpSocket *xx,QWidget *parent) :
     ui->setupUi(this);
      udpSocket = new QUdpSocket(this);
      udpSocket->bind(QHostAddress::Any, 12345);
+     
     //  connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
 
 
@@ -141,6 +142,7 @@ void  qqContact:: initial_friend_ui(const QByteArray& jsonbytery,const QByteArra
 
                item->setText(nickname);
                item->setIcon(myIcon);
+               ui->friends->addItem(item);
 
         }
     }
