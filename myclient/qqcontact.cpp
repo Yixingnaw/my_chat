@@ -9,17 +9,18 @@
 #include<QByteArray>
 #include<QMessageBox>
 
-qqContact::qqContact(QTcpSocket *xx,QWidget *parent) :
+qqContact::qqContact(QString name,QTcpSocket *xx,QWidget *parent) :
 
     QWidget(parent),
     socket(xx),
-    ui(new Ui::qqContact)
+    ui(new Ui::qqContact),
+     my_name(name)
 {
     ui->setupUi(this);
      udpSocket = new QUdpSocket(this);
      udpSocket->bind(QHostAddress::Any, 12345);
-     
-    //  connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
+    udpSocket->write("wwww");
+      connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
 
 
 }
@@ -57,19 +58,50 @@ void qqContact::on_listWidget_currentRowChanged(int currentRow)
 
 void qqContact::on_friends_itemClicked(QListWidgetItem *item)
 {
-      qDebug()<<"woaini";
+      QString ip;
+    if (item) {
+           for (auto it = friends_ip.begin(); it != friends_ip.end(); ++it) {
+               if (it.value() == item) {
+                   ip = it.key();
+                   break; // 找到了对应的 key，可以退出循环
+               }
+           }
+
+           QString nikename=item->text();
+
+           auto it=chat_map.find(ip);
+            if(it!=chat_map.end()){
+             (*it)->show();
+
+            }
+
+         else{
+
+                QHostAddress clientBinaryIP(ip);  // 这是 IP 地址的二进制形式
+
+                // 将 QUdpSocket 绑定到指定 IP 和端口
+                QHostAddress localAddress = clientBinaryIP;  // 将本地地址设置为客户端地址
+                quint16 localPort = 12345;  // 设置端口
+               QUdpSocket *udp_socket=new QUdpSocket(this);
+                udp_socket->bind(localAddress, localPort);
+                  chatUi *fend=new chatUi(my_name,nikename,udp_socket);
+                  chat_map.insert(ip,fend);
+                  fend->show();
+     }
+
+
+       }
 }
 
 void qqContact::on_group_create_clicked()
 {
            groupcreate*      new_groupcreate=new  groupcreate(socket);
            new_groupcreate->show();
-
            return;
 
 }
 //udp套接字处理
-/*
+
 void qqContact ::readPendingDatagrams() {
          while (udpSocket->hasPendingDatagrams()) {
                     QByteArray datagram;
@@ -77,26 +109,32 @@ void qqContact ::readPendingDatagrams() {
                     quint16 senderPort;
                     datagram.resize(udpSocket->pendingDatagramSize());
                     udpSocket->readDatagram(datagram.data(), datagram.size(), &senderAddress, &senderPort);
-                 //保存连接的好友id，根据id判断是否需要开启一个线程
+                 //保存连接的好友ip，根据ip判断是否需要开启一个ui
+                    QString ip=senderAddress.toString();
 
-                    int case_x;
-                    switch (case_x) {
+                   auto it=chat_map.find(ip);
+                    if(it!=chat_map.end()){
+                       (*it)->show();
+                    }
 
-                    case 0:
-                    {
+                 else{
+                        QHostAddress clientBinaryIP(ip);  // 这是 IP 地址的二进制形式
 
-                    }break;
-                    case 1:
-                    {
+                        // 将 QUdpSocket 绑定到指定 IP 和端口
+                        QHostAddress localAddress = clientBinaryIP;  // 将本地地址设置为客户端地址
+                        quint16 localPort = 12345;  // 设置端口
+                       QUdpSocket *udp_socket=new QUdpSocket(this);
+                        udp_socket->bind(localAddress, localPort);
+                          chatUi *fend=new chatUi(my_name,"",udp_socket);
+                          chat_map.insert(ip,fend);
 
-                    }break;
+                          fend->show();
 
-                    default:break;
              }
 
      }
 
-}*/
+}
 
 
 void qqContact::on_add_group_clicked()
@@ -126,6 +164,7 @@ void  qqContact:: initial_friend_ui(const QByteArray& jsonbytery,const QByteArra
                 QString username = jsonObject["username"].toString();
                 QString nickname = jsonObject["nickname"].toString();
                 QString photo= jsonObject["photoaddress"].toString();
+                QString ip=jsonObject["ip"].toString();
                  // 获得图片数据
                 QByteArray img=image_data.mid(legth+4,bytesToInt(image_data.mid(legth,4)));
                 legth+=(4+bytesToInt(image_data.mid(legth,4)));
@@ -138,11 +177,12 @@ void  qqContact:: initial_friend_ui(const QByteArray& jsonbytery,const QByteArra
                 }
                 QPixmap myPixmap = QPixmap::fromImage(img__);
                 QIcon myIcon(myPixmap);
-               QListWidgetItem *item=new QListWidgetItem(ui->friends);
+                QListWidgetItem *item=new QListWidgetItem(ui->friends);
 
-               item->setText(nickname);
+                item->setText(nickname);
                item->setIcon(myIcon);
                ui->friends->addItem(item);
+              friends_ip.insert(ip,item);
 
         }
     }

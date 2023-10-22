@@ -2,7 +2,10 @@
 #define CHATUI_H
 
 #include <QDialog>
-#include<QTcpSocket>
+#include "ui_chatui.h"
+#include<QDateTime>
+#include<QUdpSocket>
+#include<QCloseEvent>
 namespace Ui {
 class chatUi;
 }
@@ -12,12 +15,19 @@ class chatUi : public QDialog
     Q_OBJECT
 
 public:
-    explicit chatUi(QTcpSocket *sock=nullptr,QWidget *parent = nullptr);
+    explicit chatUi(QString mine,QString other,QUdpSocket *udp_,QWidget *parent = nullptr);
+   void addMessage(const QString &nickname, const QString &message);
     ~chatUi();
 
-private:
+public:
+    QString my_name;
+    QString friend_name;
+    QUdpSocket *udp_socket;
     Ui::chatUi *ui;
-    QTcpSocket *tcp;
+    void closeEvent(QCloseEvent *event);
+
+private slots:
+    void on_send_clicked();
 };
 
 #endif // CHATUI_H

@@ -43,7 +43,7 @@ private:
 
    int image_count;            //the image send counts;
    int groups_image_count;
-
+   QByteArray qquserData(qqUser*);//
 
 
 };

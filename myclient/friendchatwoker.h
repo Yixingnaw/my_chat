@@ -13,9 +13,9 @@ public:
 signals:
 
     //     void resultReady(const QString &result);
-private:
 
-     QUdpSocket *ucp_friedchat;
+public:
+     QUdpSocket *udp_friedchat;
      chatUi * friend_chat;
 };
 
@@ -30,7 +30,7 @@ class friendChatController : public QObject
         workerThread=new QThread();
         worker->moveToThread(workerThread);
         //把线程的finished信号和object的deleteLater槽连接，这个信号槽必须连接，否则会内存泄漏
-       // connect(workerThread, &QThread::finished, worker, &QObject::deleteLater);
+       connect(workerThread, &QThread::finished, worker, &QObject::deleteLater);
       //  connect(this, &friendChatController ::operate, worker, &friendChatWoker ::dofriendChatWork);
       //  connect(worker, &friendChatWoker::resultReady, this, &friendChatController::handleResults);
         workerThread->start();

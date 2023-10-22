@@ -1,4 +1,4 @@
-﻿#include"classHandle.h"
+#include"classHandle.h"
 #include<QTcpSocket>
 #include"global.h"
 #include"sql.h"
@@ -149,15 +149,16 @@ void classHandle::run(){
 
                         for(auto qquser:online_friend){
                           single=new sigleInstance();
-                     QObject::connect(single, SIGNAL(sendmesssage(QByteArray)), onlineUsers[qquser], SLOT(getmessage(QByteArray)),Qt::QueuedConnection);
-                     QObject::connect(single, SIGNAL(sendmesssage(QByteArray)), onlineUsers[qquser], SLOT(getmessage(QByteArray)),Qt::QueuedConnection);
-
+                   //  QObject::connect(single, SIGNAL(sendmesssage(QByteArray)), onlineUsers[qquser], SLOT(getmessage(QByteArray)),Qt::QueuedConnection);
+                     //QObject::connect(single, SIGNAL(sendmesssage(QByteArray)), onlineUsers[qquser], SLOT(getmessage(QByteArray)),Qt::QueuedConnection);
+                                onlineUsers[qquser]->write(jsonData);
                         }
-                        if(single!=nullptr)
-                            single->send(jsonData);
+                        if(single!=nullptr);
+                       //     single->send(jsonData);
                     }
                        QJsonObject jsonObject;
                           jsonObject["type"]="1";
+                          jsonObject["name"]=new_user->getNikename();
                           QJsonDocument jsonDocument(jsonObject);
                           // 将 JSON 文档转换为字节数组
                              QByteArray jsonData = jsonDocument.toJson();                                              qDebug()<<jsonData;
@@ -352,6 +353,8 @@ void classHandle::run(){
                    object["username"]=x.getUsername();
                    object["nickname"]=x.getNikename();
                    object["photoaddress"]=x.getUserPhone();
+                   object["ip"]=onlineUsers[*new_user]->peerAddress().toString();
+
 
                     qquser_json_array.append(object);
                }
@@ -471,6 +474,8 @@ void classHandle::run(){
                           object["username"]=new_user->getUsername();
                           object["nickname"]=new_user->getNikename();
                           object["photoaddress"]=new_user->getUserPhone();
+                          object["ip"]=onlineUsers[*new_user]->peerAddress().toString();
+
 
                            qquser_json_array.append(object);
 
@@ -543,4 +548,48 @@ QString    classHandle:: get_ip_address(QTcpSocket* socket){
        // 输出线程信息
        qDebug() << "Current Thread ID:" << threadId;
        qDebug() << "Current Thread Name:" << threadName;
+}
+QByteArray qquserData(qqUser* new_user){
+                          QJsonObject mainobject;
+                          mainobject["type"]="31";
+                          QJsonArray qquser_json_array;
+                             QJsonObject object;
+                              object["username"]=new_user->getUsername();
+                              object["nickname"]=new_user->getNikename();
+                              object["photoaddress"]=new_user->getUserPhone();
+                              object["ip"]=onlineUsers[*new_user]->peerAddress().toString();
+
+                               qquser_json_array.append(object);
+
+                          mainobject["value"]=qquser_json_array;
+                          QJsonDocument document(mainobject);
+                          QByteArray senddata=document.toJson();
+
+                          qint32 lenght=senddata.length();
+                          QByteArray data_json;
+                           data_json+=intToBytes(lenght);
+                          data_json+=senddata;//jsonlength和jsondata
+                                                     qDebug()<<   bytesToInt(data_json.left(4));
+
+                          QByteArray imgdata;  //imagedata
+
+                              QString address=new_user->getUserPhone();
+                              QByteArray img;
+                    try      {    img=imagechange()(new_user->getUserPhone());}
+                              catch(const QString& x){qDebug()<<x;}
+                              qint32 imgLength=img.length();
+                              QByteArray data_json_;
+                               data_json_+=intToBytes(imgLength);
+                              data_json_+=img;
+                              imgdata+=data_json_;
+
+                          qint32 img_length=imgdata.length();
+
+                         QByteArray data;
+                         qint32 data_length=data_json.length()+img_length+4;// 数据总长
+
+                        data+=intToBytes(data_length);
+                         data+=data_json;
+                         data+=imgdata;
+                            return data;
 }

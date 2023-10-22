@@ -12,7 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
 
@@ -21,32 +21,24 @@ QT_BEGIN_NAMESPACE
 class Ui_chatUi
 {
 public:
+    QLineEdit *contact;
+    QPushButton *send;
     QTextEdit *textEdit;
-    QLabel *friend_2;
-    QLabel *mine;
-    QTextEdit *input_text;
-    QPushButton *chat_text;
 
     void setupUi(QDialog *chatUi)
     {
         if (chatUi->objectName().isEmpty())
             chatUi->setObjectName(QString::fromUtf8("chatUi"));
-        chatUi->resize(700, 526);
+        chatUi->resize(833, 440);
+        contact = new QLineEdit(chatUi);
+        contact->setObjectName(QString::fromUtf8("contact"));
+        contact->setGeometry(QRect(80, 350, 621, 51));
+        send = new QPushButton(chatUi);
+        send->setObjectName(QString::fromUtf8("send"));
+        send->setGeometry(QRect(720, 360, 89, 25));
         textEdit = new QTextEdit(chatUi);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(0, 80, 711, 311));
-        friend_2 = new QLabel(chatUi);
-        friend_2->setObjectName(QString::fromUtf8("friend_2"));
-        friend_2->setGeometry(QRect(30, 20, 67, 51));
-        mine = new QLabel(chatUi);
-        mine->setObjectName(QString::fromUtf8("mine"));
-        mine->setGeometry(QRect(600, 20, 67, 51));
-        input_text = new QTextEdit(chatUi);
-        input_text->setObjectName(QString::fromUtf8("input_text"));
-        input_text->setGeometry(QRect(20, 400, 591, 101));
-        chat_text = new QPushButton(chatUi);
-        chat_text->setObjectName(QString::fromUtf8("chat_text"));
-        chat_text->setGeometry(QRect(630, 420, 51, 51));
+        textEdit->setGeometry(QRect(70, 50, 681, 271));
 
         retranslateUi(chatUi);
 
@@ -56,9 +48,7 @@ public:
     void retranslateUi(QDialog *chatUi)
     {
         chatUi->setWindowTitle(QCoreApplication::translate("chatUi", "Dialog", nullptr));
-        friend_2->setText(QCoreApplication::translate("chatUi", "TextLabel", nullptr));
-        mine->setText(QCoreApplication::translate("chatUi", "TextLabel", nullptr));
-        chat_text->setText(QCoreApplication::translate("chatUi", "PushButton", nullptr));
+        send->setText(QCoreApplication::translate("chatUi", "send", nullptr));
     } // retranslateUi
 
 };

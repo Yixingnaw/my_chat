@@ -912,11 +912,6 @@ moc_chatui.cpp: ../myclient/chatui.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/QTcpSocket \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		moc_predefs.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/bin/moc
 	/opt/Qt5.14.2/5.14.2/gcc_64/bin/moc $(DEFINES) --include /home/zuoyi/QT/my_src/myserver/myclient/build-myclient-Desktop_Qt_5_14_2_GCC_64bit-Debug/moc_predefs.h -I/opt/Qt5.14.2/5.14.2/gcc_64/mkspecs/linux-g++ -I/home/zuoyi/QT/my_src/myserver/myclient/myclient -I/opt/Qt5.14.2/5.14.2/gcc_64/include -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../myclient/chatui.h -o moc_chatui.cpp
@@ -1028,16 +1023,14 @@ moc_friendchatwoker.cpp: ../myclient/friendchatwoker.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/QTcpSocket \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/QUdpSocket \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qudpsocket.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qhostaddress.h \
 		moc_predefs.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/bin/moc
@@ -1435,6 +1428,15 @@ moc_qqcontact.cpp: ../myclient/qqcontact.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QImage \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QIcon \
+		../myclient/global.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QDataStream \
+		../myclient/friendchatwoker.h \
+		../myclient/chatui.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		moc_predefs.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/bin/moc
 	/opt/Qt5.14.2/5.14.2/gcc_64/bin/moc $(DEFINES) --include /home/zuoyi/QT/my_src/myserver/myclient/build-myclient-Desktop_Qt_5_14_2_GCC_64bit-Debug/moc_predefs.h -I/opt/Qt5.14.2/5.14.2/gcc_64/mkspecs/linux-g++ -I/home/zuoyi/QT/my_src/myserver/myclient/myclient -I/opt/Qt5.14.2/5.14.2/gcc_64/include -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork -I/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../myclient/qqcontact.h -o moc_qqcontact.cpp
@@ -1727,6 +1729,15 @@ moc_widget.cpp: ../myclient/widget.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QImage \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QIcon \
+		../myclient/global.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QDataStream \
+		../myclient/friendchatwoker.h \
+		../myclient/chatui.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QSet \
 		moc_predefs.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/bin/moc
@@ -1875,11 +1886,6 @@ chatui.o: ../myclient/chatui.cpp ../myclient/chatui.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/QTcpSocket \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		ui_chatui.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QVariant \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QApplication \
@@ -1892,6 +1898,12 @@ chatui.o: ../myclient/chatui.cpp ../myclient/chatui.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QLabel \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qlabel.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QLineEdit \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qlineedit.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextcursor.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextformat.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextoption.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QPushButton \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qpushbutton.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qabstractbutton.h \
@@ -1899,11 +1911,7 @@ chatui.o: ../myclient/chatui.cpp ../myclient/chatui.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QTextEdit \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qtextedit.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextdocument.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextoption.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextcursor.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextformat.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpen.h
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextdocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chatui.o ../myclient/chatui.cpp
 
 friendchatwoker.o: ../myclient/friendchatwoker.cpp ../myclient/friendchatwoker.h \
@@ -2013,16 +2021,14 @@ friendchatwoker.o: ../myclient/friendchatwoker.cpp ../myclient/friendchatwoker.h
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/QTcpSocket \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/QUdpSocket \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qudpsocket.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtNetwork/qhostaddress.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o friendchatwoker.o ../myclient/friendchatwoker.cpp
 
@@ -2052,7 +2058,37 @@ global.o: ../myclient/global.cpp ../myclient/global.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qnamespace.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qarraydata.h
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QDataStream \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobject_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o global.o ../myclient/global.cpp
 
 groupcreate.o: ../myclient/groupcreate.cpp ../myclient/groupcreate.h \
@@ -2481,6 +2517,15 @@ main.o: ../myclient/main.cpp ../myclient/widget.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QImage \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QIcon \
+		../myclient/global.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QDataStream \
+		../myclient/friendchatwoker.h \
+		../myclient/chatui.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QSet \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qapplication.h \
@@ -2767,6 +2812,15 @@ qqcontact.o: ../myclient/qqcontact.cpp ../myclient/qqcontact.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QImage \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QIcon \
+		../myclient/global.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QDataStream \
+		../myclient/friendchatwoker.h \
+		../myclient/chatui.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		ui_qqcontact.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QVariant \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QApplication \
@@ -2789,8 +2843,7 @@ qqcontact.o: ../myclient/qqcontact.cpp ../myclient/qqcontact.h \
 		../myclient/widget.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QSet \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QMessageBox \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qmessagebox.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qqcontact.o ../myclient/qqcontact.cpp
 
 qquser.o: ../myclient/qquser.cpp ../myclient/qquser.h \
@@ -3176,6 +3229,15 @@ widget.o: ../myclient/widget.cpp ../myclient/widget.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QImage \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QIcon \
+		../myclient/global.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QDataStream \
+		../myclient/friendchatwoker.h \
+		../myclient/chatui.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QSet \
 		ui_widget.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QVariant \
@@ -3199,14 +3261,7 @@ widget.o: ../myclient/widget.cpp ../myclient/widget.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QSignalMapper \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsignalmapper.h \
 		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QMessageBox \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qmessagebox.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
-		../myclient/friendchatwoker.h \
-		../myclient/chatui.h \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QDialog \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QObject \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QThread \
-		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qthread.h
+		/opt/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget.o ../myclient/widget.cpp
 
 moc_chatui.o: moc_chatui.cpp 

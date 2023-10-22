@@ -11,7 +11,9 @@
 #include<mutex>
 #include<QJsonArray>
 #include"imagechange.h"
+#include"chatui.h"
 #include"global.h"
+#include"friendchatwoker.h"
 namespace Ui {
 class qqContact;
 }
@@ -21,7 +23,7 @@ class qqContact : public QWidget
     Q_OBJECT
 
 public:
-    explicit qqContact(QTcpSocket * xx=nullptr,QWidget *parent = nullptr);
+    explicit qqContact(QString name,QTcpSocket * xx=nullptr,QWidget *parent = nullptr);
     ~qqContact();
 
 
@@ -32,8 +34,8 @@ private slots:
     void on_friends_itemClicked(QListWidgetItem *item);
     void on_group_create_clicked();
 
-   //void readPendingDatagrams();
-   void on_add_group_clicked();
+    void readPendingDatagrams();
+     void on_add_group_clicked();
 
 //   void on_friends_itemDoubleClicked(QListWidgetItem *item);
    
@@ -46,8 +48,11 @@ public:
      std::unordered_map<qqUser,QImage*> friends;//
      std::mutex mutex_friend;
 
-     QSet<QString> ip_frined;  //记录好友界面数
+
+     QMap<QString,QListWidgetItem*>  friends_ip;//ip key
+     QMap<QString,chatUi*> chat_map;//ip key
      std::mutex mutex_groups;  //、记录群界面数
+     QString my_name;
 
 //function
 public:

@@ -36,5 +36,6 @@ public:
     bool first_initial;//用来接受服务器新登录好友信息
     QByteArray ui_data_;//用来接受服务器新登录好友界面
     qint32 data_length;//初始化界面数据长度
+    QString myname;
 };
 #endif // WIDGET_H

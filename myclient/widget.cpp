@@ -15,7 +15,7 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
     log_on=new QTcpSocket();
-    qq_contact=new qqContact(log_on);
+
     data_initial=false;
    first_initial=false;
 
@@ -64,7 +64,9 @@ Widget::Widget(QWidget *parent)
                message->show();
                message->setText(xx);
            }break;
-           case 1:{//success in //bind udp            
+           case 1:{//success in //bind udp
+                //获取自己的头像
+               myname=newObject.value("name").toString();
              //请求界面初始化
                data_initial=true;
                     QJsonObject jsonObject;
@@ -72,6 +74,7 @@ Widget::Widget(QWidget *parent)
                      QJsonDocument jsonDocument(jsonObject);
                      QByteArray jsonData = jsonDocument.toJson();
                      log_on->write(jsonData);
+                       qq_contact=new qqContact(myname,log_on);
                hide();
                  qq_contact->show();
            }break;
