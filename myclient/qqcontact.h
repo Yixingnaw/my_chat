@@ -1,4 +1,4 @@
-#ifndef QQCONTACT_H
+﻿#ifndef QQCONTACT_H
 #define QQCONTACT_H
 #include<QUdpSocket>
 #include <QWidget>
@@ -50,8 +50,8 @@ public:
 
 
      QMap<QString,QListWidgetItem*>  friends_ip;//ip key
-     QMap<QString,chatUi*> chat_map;//ip key
-     std::mutex mutex_groups;  //、记录群界面数
+     QMap<QString,chatUi*> chat_map;//ip key  记录群界面数
+     std::mutex mutex_groups;
      QString my_name;
 
 //function

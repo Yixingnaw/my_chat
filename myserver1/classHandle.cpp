@@ -353,8 +353,7 @@ void classHandle::run(){
                    object["username"]=x.getUsername();
                    object["nickname"]=x.getNikename();
                    object["photoaddress"]=x.getUserPhone();
-                   object["ip"]=onlineUsers[*new_user]->peerAddress().toString();
-
+                   object["ip"]=onlineUsers[x]->peerAddress().toString();  //好友ip
 
                     qquser_json_array.append(object);
                }

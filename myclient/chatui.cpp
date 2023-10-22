@@ -1,10 +1,11 @@
 #include "chatui.h"
 #include "ui_chatui.h"
 
-chatUi::chatUi(QString mine,QString other,QUdpSocket *udp_,QWidget *parent) :
+chatUi::chatUi(QString mine,QString other,QString ip,QUdpSocket *udp_,QWidget *parent) :
     QDialog(parent),
     my_name(mine),
     friend_name(other),
+    ip_(ip),
     udp_socket(udp_),
     ui(new Ui::chatUi)
 {
@@ -28,7 +29,11 @@ void    chatUi::addMessage(const QString &nickname, const QString &message) {
     // 使用富文本格式追加消息到聊天框
 
     ui->textEdit->insertHtml(newMessage+"\n");
-    udp_socket->write(newMessage.toUtf8());
+
+    QHostAddress recipientAddress(ip_); // 用目标 IP 地址初始化
+    quint16 recipientPort = 12345; // 目标端口
+
+      udp_socket ->writeDatagram(newMessage.toUtf8(), recipientAddress, recipientPort);
 }
 
 void chatUi::closeEvent(QCloseEvent *event) {
@@ -38,6 +43,10 @@ void chatUi::closeEvent(QCloseEvent *event) {
     // 隐藏窗口而不是关闭
     hide();
 }
+void   chatUi:: view(const QByteArray &message){
+    ui->textEdit->insertHtml(QString::fromUtf8(message));
+}
+
 
 void chatUi::on_send_clicked()
 {

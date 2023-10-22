@@ -18,8 +18,9 @@ qqContact::qqContact(QString name,QTcpSocket *xx,QWidget *parent) :
 {
     ui->setupUi(this);
      udpSocket = new QUdpSocket(this);
+     udpSocket->open(QIODevice::ReadWrite);
      udpSocket->bind(QHostAddress::Any, 12345);
-    udpSocket->write("wwww");
+
       connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
 
 
@@ -77,14 +78,9 @@ void qqContact::on_friends_itemClicked(QListWidgetItem *item)
 
          else{
 
-                QHostAddress clientBinaryIP(ip);  // 这是 IP 地址的二进制形式
-
-                // 将 QUdpSocket 绑定到指定 IP 和端口
-                QHostAddress localAddress = clientBinaryIP;  // 将本地地址设置为客户端地址
-                quint16 localPort = 12345;  // 设置端口
                QUdpSocket *udp_socket=new QUdpSocket(this);
-                udp_socket->bind(localAddress, localPort);
-                  chatUi *fend=new chatUi(my_name,nikename,udp_socket);
+
+                  chatUi *fend=new chatUi(my_name,nikename,ip,udp_socket);
                   chat_map.insert(ip,fend);
                   fend->show();
      }
@@ -118,16 +114,14 @@ void qqContact ::readPendingDatagrams() {
                     }
 
                  else{
-                        QHostAddress clientBinaryIP(ip);  // 这是 IP 地址的二进制形式
 
-                        // 将 QUdpSocket 绑定到指定 IP 和端口
-                        QHostAddress localAddress = clientBinaryIP;  // 将本地地址设置为客户端地址
-                        quint16 localPort = 12345;  // 设置端口
-                       QUdpSocket *udp_socket=new QUdpSocket(this);
-                        udp_socket->bind(localAddress, localPort);
-                          chatUi *fend=new chatUi(my_name,"",udp_socket);
+                        QHostAddress clientBinaryIP(ip);
+
+                       QUdpSocket *udp_socket=new QUdpSocket(this);            
+
+                          chatUi *fend=new chatUi(my_name,"",ip,udp_socket);
                           chat_map.insert(ip,fend);
-
+                           fend->view(datagram);
                           fend->show();
 
              }

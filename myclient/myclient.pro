@@ -19,6 +19,7 @@ SOURCES += \
     chatui.cpp \
     friendchatwoker.cpp \
     global.cpp \
+    group_contact.cpp \
     groupcreate.cpp \
     imagechange.cpp \
     main.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     chatui.h \
     friendchatwoker.h \
     global.h \
+    group_contact.h \
     groupcreate.h \
     imagechange.h \
     myheadlable.h \
@@ -42,6 +44,7 @@ HEADERS += \
 
 FORMS += \
     chatui.ui \
+    group_contact.ui \
     groupcreate.ui \
     qqcontact.ui \
     signup.ui \
