@@ -18,7 +18,6 @@ groupcreate::groupcreate(QTcpSocket* tcp,QWidget *parent) :
              imagepath=image;
     });
 
-
 }
 
 groupcreate::~groupcreate()
@@ -37,15 +36,12 @@ void groupcreate::on_send_clicked()
     jsonObject["groupname"]=groop_name;
     jsonObject["describe"] = groou_describe;
     QJsonDocument jsonDocument(jsonObject);
-
        QByteArray jsonBytes = jsonDocument.toJson();
-
         int json_size=jsonBytes.size(); jsonBytes.append(246-json_size,' ');
         jsonBytes.append(4,char(json_size));
         jsonBytes.append(dataPacket);
         tcp_->write(jsonBytes);
         ui->send->setDisabled(false);
-        qDebug()<<"client has send over";
-
+                                                                                                qDebug()<<"client has send over";
         return ;       
 }

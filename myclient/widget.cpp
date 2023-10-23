@@ -42,8 +42,7 @@ Widget::Widget(QWidget *parent)
 
           }else  if(!data_initial&&first_initial){
 
-              ui_data_.append(date);
-
+              ui_data_.append(date);            
              if(ui_data_.size()<bytesToInt(ui_data_.left(4))){//  读完请求界面的数据
                  return ;
              }     qint32 length_json= bytesToInt(  ui_data_.mid(4,4));
@@ -124,6 +123,7 @@ Widget::Widget(QWidget *parent)
 
            }break;
            case 41:{
+               //服务器界面初始化
               QByteArray image__data=ui_data.mid(8+bytesToInt(ui_data.mid(4,4)));
 
                QJsonArray jsonArray=newObject["value"].toArray();
@@ -138,6 +138,7 @@ Widget::Widget(QWidget *parent)
 
            }break;
            case 50:{
+
 
            }break;
            case  51:{

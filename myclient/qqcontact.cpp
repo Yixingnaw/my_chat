@@ -21,8 +21,7 @@ qqContact::qqContact(QString name,QTcpSocket *xx,QWidget *parent) :
      udpSocket->open(QIODevice::ReadWrite);
      udpSocket->bind(QHostAddress::Any, 12345);
 
-      connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
-
+     connect(udpSocket, &QUdpSocket::readyRead, this, &qqContact::readPendingDatagrams);
 
 }
 
@@ -79,7 +78,6 @@ void qqContact::on_friends_itemClicked(QListWidgetItem *item)
          else{
 
                QUdpSocket *udp_socket=new QUdpSocket(this);
-
                   chatUi *fend=new chatUi(my_name,nikename,ip,udp_socket);
                   chat_map.insert(ip,fend);
                   fend->show();
@@ -110,6 +108,7 @@ void qqContact ::readPendingDatagrams() {
 
                    auto it=chat_map.find(ip);
                     if(it!=chat_map.end()){
+                        (*it)->view(datagram);
                        (*it)->show();
                     }
 

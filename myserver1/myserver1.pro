@@ -20,6 +20,7 @@ SOURCES += \
     chat.cpp \
     classHandle.cpp \
     global.cpp \
+    group.cpp \
     imagechangge.cpp \
     main.cpp \
     mytcpsockt.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     chat.h \
     classHandle.h \
     global.h \
+    group.h \
     imagechangge.h \
     mytcpsockt.h \
     qquser.h \
