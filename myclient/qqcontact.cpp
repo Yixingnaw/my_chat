@@ -86,6 +86,39 @@ void qqContact::on_friends_itemClicked(QListWidgetItem *item)
 
        }
 }
+void qqContact::on_listWidget_itemClicked(QListWidgetItem *item)
+{
+
+    QString group_count__;
+  if (item) {
+         for (auto it = group_count_.begin(); it != group_count_.end(); ++it) {
+             if (it.value() == item) {
+                 group_count__ = it.key();
+                 break; // 找到了对应的 key，可以退出循环
+             }
+         }
+
+         QString groupname=item->text();
+
+         auto it=group_contact_map.find(group_count__);
+          if(it!=group_contact_map.end()){
+           (*it)->show();
+
+          }
+
+       else{
+
+
+                group_contact *fend=new group_contact(my_name,group_count__,socket);
+              group_contact_map.insert(group_count__,fend);
+                fend->show();
+   }
+
+
+     }
+}
+
+
 
 void qqContact::on_group_create_clicked()
 {
@@ -128,7 +161,20 @@ void qqContact ::readPendingDatagrams() {
      }
 
 }
+void    qqContact:: qqcontact_on_read_group_message(QString group_count,QString message){
+    auto it=group_contact_map.find(group_count);
+     if(it!=group_contact_map.end()){
+         (*it)->view(message.toUtf8());
+        (*it)->show();
+     }
 
+  else{
+
+         group_contact *fend=new group_contact(my_name,group_count,socket,this);
+       group_contact_map.insert(group_count,fend);
+         fend->show();
+}
+}
 
 void qqContact::on_add_group_clicked()
 {
@@ -182,3 +228,42 @@ void  qqContact:: initial_friend_ui(const QByteArray& jsonbytery,const QByteArra
 
 }
 }
+void  qqContact::initial_group_ui(const QByteArray& jsonbytery,const QByteArray& image_data){
+    QJsonDocument receivedDocument = QJsonDocument::fromJson(jsonbytery); //  是接收到的字节数组
+     qint32 legth=0;
+    if (!receivedDocument.isNull()) {
+        if (receivedDocument.isArray()) {
+            QJsonArray receivedArray = receivedDocument.array();
+
+            for (int i = 0; i < receivedArray.size(); ++i) {
+                QJsonObject jsonObject = receivedArray[i].toObject();
+
+                // 提取用户名和昵称
+                QString username = jsonObject["group_name"].toString();
+                QString nickname = jsonObject["description"].toString();
+                QString photo= jsonObject["photoaddress"].toString();
+                QString group_count=jsonObject["group_count"].toString();
+                 // 获得图片数据
+                QByteArray img=image_data.mid(legth+4,bytesToInt(image_data.mid(legth,4)));
+                legth+=(4+bytesToInt(image_data.mid(legth,4)));
+                 QImage img__  ;
+                try {
+                  img__   =imagechange().byte_to_qimage(img);
+                } catch (const QString& x) {
+                    qDebug()<<x;
+
+                }
+                QPixmap myPixmap = QPixmap::fromImage(img__);
+                QIcon myIcon(myPixmap);
+                QListWidgetItem *item=new QListWidgetItem(ui->listWidget);
+                item->setText(nickname);
+               item->setIcon(myIcon);
+               ui->listWidget->addItem(item);
+               group_count_.insert(group_count,item);
+        }
+    }
+
+}
+}
+
+

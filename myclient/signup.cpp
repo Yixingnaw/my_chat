@@ -98,11 +98,8 @@ void signUp:: pushButton_clicked(){
           jsonBytes.append(4,char(json_size));
           jsonBytes.append(dataPacket);
             sign_up_sockt->sign_up.write(jsonBytes);
-
            qDebug()<<"client has send over";
-
             sign_up_sockt->sign_up.waitForBytesWritten();
-
            QObject:: connect(&sign_up_sockt->sign_up, &QTcpSocket::disconnected, [sign_up_sockt](){
                 // 断开信号触发时，删除 QTcpSocket 对象
                 sign_up_sockt->sign_up.deleteLater();

@@ -26,6 +26,7 @@
 #include<QHostAddress>
 #include"sigleinstance.h"
 #include<QThread>
+#include"group.h"
 class classHandle :public QRunnable
 {
 
@@ -43,8 +44,8 @@ private:
 
    int image_count;            //the image send counts;
    int groups_image_count;
-   QByteArray qquserData(qqUser*);//
 
+   QByteArray     groupData(QVector<group>&container);
 
 };
 

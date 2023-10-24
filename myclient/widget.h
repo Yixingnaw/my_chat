@@ -8,6 +8,7 @@
 #include<mutex>
 #include<QSet>
 #include"global.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -36,6 +37,9 @@ public:
     bool first_initial;//用来接受服务器新登录好友信息
     QByteArray ui_data_;//用来接受服务器新登录好友界面
     qint32 data_length;//初始化界面数据长度
+
+    QByteArray group_ui_data;//群表ui data
+    bool group_initial;
     QString myname;
 };
 #endif // WIDGET_H

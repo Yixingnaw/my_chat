@@ -20,7 +20,9 @@ public:
 bool static loadUserByUserName(std::string id);
 bool setUser(const qqUser&);
    bool operator==(const qqUser& other) const;
-
+   bool operator<(const qqUser& x)const{
+       return  username<x.username;
+   }
 QString getUsername() const {
     return username;
 }

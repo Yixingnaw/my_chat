@@ -31,6 +31,8 @@ void classHandle::run(){
    QVector<int> uer_friend_ids;                            //用户所有好友信息id
    QVector<int>user_online_friend_ids;                     //用户在线好友信息id
    std::unordered_set<qqUser> online_friend;                //用户在线好友信息
+           QVector<group>groups;                                           //用户所有群表
+           QMultiMap<qqUser,group> group_online_users;                                //群里所有online_id
       sigleInstance *single=nullptr;
         QObject::connect(&socket,&QTcpSocket::disconnected,[&]{
               mutex.lock();
@@ -139,7 +141,51 @@ void classHandle::run(){
                     for(auto x:user_online_friend_ids){
                         online_friend.emplace(onlineIDs[x]);
                     }
-                      //通知每个在线好友有新的好友登录
+
+                    //查找所有用户群，保存在群表中
+                    mutex_rb.lock();
+                     queryString= QString("SELECT groups.* "
+                                  "FROM group_members "
+                                  "JOIN groups ON group_members.group_id = groups.group_id "
+                                   "WHERE group_members.user_id = %1").arg(my_id);
+                    if(db.executeQuery(queryString))
+                        while (db.query.next()) {
+                           int id=db.query.value(0).toInt();
+                           QString group_name=db.query.value(1).toString();
+                           QString xxx=db.query.value(2).toString();
+                           QString xxxx=db.query.value(3).toString();
+                           QString xxxxx=db.query.value(4).toString();
+                           group it_=group(id,group_name,xxx,xxxx,xxxxx);
+                           groups.push_back(it_);
+                        }
+                    }
+                    mutex_rb.unlock();
+                    for(const auto x:groups){
+                       std::lock_guard<std::mutex> mute(mutex_rb);
+                       int id__=x.get_id();
+                       QString queryString = QString("SELECT users.* "
+                                                     " FROM users "
+                                                    " WHERE users.user_id IN ( "
+                                                     " SELECT user_id "
+                                                       "  FROM group_members "
+                                                        " WHERE group_id = %1 )"
+                                                     ).arg(id__);
+                       if(db.executeQuery(queryString)){
+                           while (db.query.next()) {
+                               QString user_name=db.query.value(1).toString();
+                               for(const auto it:onlineUsers){
+
+                                                                                       qDebug()<<user_name;
+                                   if(it.first.getUsername()==user_name){
+                                      group_online_users.insert(it.first,x);
+                                                                                       qDebug()<<user_name;
+                                   }
+                               }
+                           }
+                       }
+
+
+                    }  //通知每个在线好友有新的好友登录
                     {//遍历用户在线好友信息得到每一个socket
                         QJsonObject jsonObject;
                            jsonObject["type"]="30";
@@ -164,7 +210,7 @@ void classHandle::run(){
                              QByteArray jsonData = jsonDocument.toJson();                                              qDebug()<<jsonData;
                             socket.write(jsonData);
 
-                     }
+
                   }
                      else{
 
@@ -176,7 +222,7 @@ void classHandle::run(){
                            QByteArray jsonData = jsonDocument.toJson();
 
                        socket.write(jsonData);
-                      return;
+                      return;                      
                   }
 }
                       break;
@@ -396,21 +442,40 @@ void classHandle::run(){
 }
                       break;
 
-                   case 5:                 //the client friends chat
+                   case 5:                 // 群界面初始化
 {
-
-
+                    QByteArray data_group=groupData(groups);
+                    socket.write(data_group);
 }
                       break;
                    case 6:                 //the   client groups chat
 {
 
+                    QString group_count=newObject.value("group_count").toString();
+                    QString message=newObject.value("message").toString();
+                    auto it=group_online_users.begin();
+                   for(;it!=group_online_users.end();it++){
+                       if(it.value().get_group_count()==group_count){
+                             //群里所有在线，socket转发,不得向自己的socket转发
+                             if(!(it.key()==*new_user)){
+                                 QJsonObject jsonObject;
+                                 jsonObject["type"]="61";
+                                 jsonObject["group_count"]=group_count;
+                                 jsonObject["message"]=message;
+
+                                 QJsonDocument jsonDocument(jsonObject);
+                                 QByteArray jsonData = jsonDocument.toJson();
+
+                                 onlineUsers[it.key()]->write(jsonData);
+                             }
+                       }
+                   }
                     
 } break;
                    case 7:               //group create
 {
                      QString group_Name=newObject.value("groupname").toString();
-                      QString description=newObject.value("groupdescribe").toString();                   
+                      QString description=newObject.value("describe").toString();
                       
                       QString group_count;
                       do{
@@ -488,7 +553,7 @@ void classHandle::run(){
                       QByteArray data_json;
                        data_json+=intToBytes(lenght);
                       data_json+=senddata;//jsonlength和jsondata
-                                                 qDebug()<<   bytesToInt(data_json.left(4));
+
 
                       QByteArray imgdata;  //imagedata
 
@@ -512,7 +577,7 @@ void classHandle::run(){
                      data+=imgdata;
                      qint32 length_json=data.mid(4,4).toInt();
                     qint32 leth=bytesToInt(data.left(4));
-                                                                                      qDebug()<<length_json<<":界面更新时所有好友json数据长 "<<leth<<":总长";
+                                                                                 qDebug()<<length_json<<":界面更新时所有好友json数据长 "<<leth<<":总长";
                       socket.write(data);
 
 
@@ -550,18 +615,20 @@ QString    classHandle:: get_ip_address(QTcpSocket* socket){
        qDebug() << "Current Thread ID:" << threadId;
        qDebug() << "Current Thread Name:" << threadName;
 }
-QByteArray qquserData(qqUser* new_user){
+QByteArray      classHandle:: groupData(QVector<group>&container){
+
+
                           QJsonObject mainobject;
-                          mainobject["type"]="31";
+                          mainobject["type"]="51";
                           QJsonArray qquser_json_array;
+                          for(auto new_user:container){
                              QJsonObject object;
-                              object["username"]=new_user->getUsername();
-                              object["nickname"]=new_user->getNikename();
-                              object["photoaddress"]=new_user->getUserPhone();
-                              object["ip"]=onlineUsers[*new_user]->peerAddress().toString();
-
+                              object["group_name"]=new_user.getGrouprname();
+                              object["description"]=new_user.getdescription();
+                              object["photoaddress"]=new_user.getphoto_address();
+                              object["group_count"]=new_user.get_group_count();
                                qquser_json_array.append(object);
-
+}
                           mainobject["value"]=qquser_json_array;
                           QJsonDocument document(mainobject);
                           QByteArray senddata=document.toJson();
@@ -570,20 +637,20 @@ QByteArray qquserData(qqUser* new_user){
                           QByteArray data_json;
                            data_json+=intToBytes(lenght);
                           data_json+=senddata;//jsonlength和jsondata
-                                                     qDebug()<<   bytesToInt(data_json.left(4));
+
 
                           QByteArray imgdata;  //imagedata
-
-                              QString address=new_user->getUserPhone();
+                       for(auto new_user:container){
+                              QString address=new_user.getphoto_address();
                               QByteArray img;
-                    try      {    img=imagechange()(new_user->getUserPhone());}
+                    try      {    img=imagechange()(new_user.getphoto_address());}
                               catch(const QString& x){qDebug()<<x;}
                               qint32 imgLength=img.length();
                               QByteArray data_json_;
                                data_json_+=intToBytes(imgLength);
                               data_json_+=img;
-                              imgdata+=data_json_;
-
+                             imgdata+=data_json_;
+                                }
                           qint32 img_length=imgdata.length();
 
                          QByteArray data;
@@ -591,6 +658,9 @@ QByteArray qquserData(qqUser* new_user){
 
                         data+=intToBytes(data_length);
                          data+=data_json;
-                         data+=imgdata;
-                            return data;
+                         data+=imgdata;                                                       qDebug()<<  "群初始化时所有群数据"<<data.size();
+                        int xxxx=  bytesToInt(data.left(4));
+                        int yyyy=bytesToInt(data.mid(4,4));
+
+                        return data;
 }

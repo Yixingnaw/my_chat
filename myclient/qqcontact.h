@@ -14,6 +14,7 @@
 #include"chatui.h"
 #include"global.h"
 #include"friendchatwoker.h"
+#include"group_contact.h"
 namespace Ui {
 class qqContact;
 }
@@ -39,6 +40,8 @@ private slots:
 
 //   void on_friends_itemDoubleClicked(QListWidgetItem *item);
    
+     void on_listWidget_itemClicked(QListWidgetItem *item);
+
 public:
     groupcreate *newgroup;
      QTcpSocket *socket;
@@ -50,14 +53,20 @@ public:
 
 
      QMap<QString,QListWidgetItem*>  friends_ip;//ip key
-     QMap<QString,chatUi*> chat_map;//ip key  记录群界面数
+     QMap<QString,chatUi*> chat_map;//ip key  记录friend界面数
+
+     QMap<QString,QListWidgetItem*> group_count_; //group_count key
+     QMap<QString,group_contact*>group_contact_map;
+
      std::mutex mutex_groups;
      QString my_name;
 
 //function
 public:
        void  initial_friend_ui(const QByteArray& x,const QByteArray& imagedata);
+       void   initial_group_ui(const QByteArray& x,const QByteArray& imagedata);
   //not complete     QSet<QString>
+        void qqcontact_on_read_group_message(QString group__count,QString message);
 };
 
 #endif // QQCONTACT_H

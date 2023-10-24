@@ -17,7 +17,6 @@ friendChatWoker::friendChatWoker(QObject *parent) : QObject(parent)
                    datagram.resize(udp_friedchat ->pendingDatagramSize());
                   udp_friedchat ->readDatagram(datagram.data(), datagram.size());
 
-
                }
            });
   

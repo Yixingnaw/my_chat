@@ -45,3 +45,5 @@ void groupcreate::on_send_clicked()
                                                                                                 qDebug()<<"client has send over";
         return ;       
 }
+
+
