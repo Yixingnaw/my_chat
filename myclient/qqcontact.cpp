@@ -147,7 +147,7 @@ void qqContact ::readPendingDatagrams() {
 
                  else{
 
-                        QHostAddress clientBinaryIP(ip);
+                       QHostAddress clientBinaryIP(ip);
 
                        QUdpSocket *udp_socket=new QUdpSocket(this);            
 

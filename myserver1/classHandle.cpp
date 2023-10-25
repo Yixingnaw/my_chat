@@ -465,7 +465,7 @@ void classHandle::run(){
 
                                  QJsonDocument jsonDocument(jsonObject);
                                  QByteArray jsonData = jsonDocument.toJson();
-
+                              //
                                  onlineUsers[it.key()]->write(jsonData);
                              }
                        }

@@ -29,7 +29,7 @@ void    chatUi::addMessage(const QString &nickname, const QString &message) {
     // 使用富文本格式追加消息到聊天框
 
    ui->textEdit->insertHtml("<br>" + newMessage + "<br>");
-
+     qDebug()<<ip_;
     QHostAddress recipientAddress(ip_); // 用目标 IP 地址初始化
     quint16 recipientPort = 12345; // 目标端口
 
